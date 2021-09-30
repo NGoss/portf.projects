@@ -1,2 +1,1 @@
-# portf.projects
-Projects page for portfolio website
+Projects page for portfolio app
