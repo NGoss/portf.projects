@@ -1,26 +1,78 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import attachStyles from 'react-jss'
+import { Classes } from 'jss'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Project, {IAction, IProject} from './project'
+import Expander from './expander'
+
+interface Props {
+  classes: Classes
 }
 
-export default App;
+interface State {
+  expandedId?: string,
+  projects: Array<IProject>
+}
+
+class App extends React.Component<Props, State> {
+  constructor(props :Props) {
+    super(props)
+
+    this.state = {
+      expandedId: undefined,
+      projects: [
+        {
+          name: "Material-UI eBook Viewer",
+          path: "http://viewer.foinse.io",
+          action: IAction.iframe
+        }
+      ]
+    }
+
+    this.setExpandedId = this.setExpandedId.bind(this)
+  }
+
+  setExpandedId(expandedId :string) {
+    this.setState({expandedId})
+  }
+
+  render() {
+    const { classes } = this.props
+
+    return (
+      <div className={classes.rootContainer}>
+        <div className={classes.projectsContainer}>
+          <header className={classes.projectsNav}>
+            {this.state.projects.map((project :IProject) =>
+              (<Project name={project.name} action={project.action} path={project.path} setExpandedId={this.setExpandedId} />))}
+          </header>
+          <Expander project={this.state.projects.find((project :IProject) => project.name === this.state.expandedId)} />
+        </div>
+        <div className={classes.footerContainer}>
+          Portfolio v0.1 © nate goss
+        </div>
+      </div>
+    )
+  }
+}
+
+export default attachStyles({
+  rootContainer: {
+    backgroundColor: '#000',
+    color: '#008000',
+    padding: 10,
+    height: 'Calc(100% - 20px)',
+    width: 'Calc(100% - 20px)'
+  },
+  projectsContainer: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  projectsNav: {
+    marginBottom: 10,
+  },
+  footerContainer: {
+    bottom: 50,
+    position: 'absolute'
+  }
+})(App)
