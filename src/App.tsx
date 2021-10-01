@@ -44,7 +44,7 @@ class App extends React.Component<Props, State> {
         <div className={classes.projectsContainer}>
           <header className={classes.projectsNav}>
             {this.state.projects.map((project :IProject) =>
-              (<Project name={project.name} action={project.action} path={project.path} setExpandedId={this.setExpandedId} />))}
+              (<Project key={project.name} name={project.name} action={project.action} path={project.path} setExpandedId={this.setExpandedId} />))}
           </header>
           <Expander project={this.state.projects.find((project :IProject) => project.name === this.state.expandedId)} />
         </div>
