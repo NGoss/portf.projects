@@ -10,7 +10,8 @@ export enum IAction {
 export interface IProject {
     name: string,
     action: IAction,
-    path: string
+    path: string,
+    description: string
 }
 
 interface Props {
@@ -18,22 +19,28 @@ interface Props {
     name: string,
     setExpandedId: Function,
     action: IAction,
-    path: string
+    path: string,
+    description: string
 }
 
 class Project extends React.Component<Props> {
 
     render() {
-        const { classes, name, action, setExpandedId } = this.props
+        const { classes, name, action, description, setExpandedId } = this.props
         return (
         <button className={classes.baseContainer}
-            onClick={() => setExpandedId(name, action)}>{name}</button>)
+            onClick={() => setExpandedId(name, action)}>
+                <h2>{name}</h2>
+                <p>{description}</p>
+            </button>)
     }
 }
 
 export default attachStyles({
     baseContainer: {
-        display: 'inline-block',
+        display: 'block',
+        margin: '10px',
+        minWidth: '400px',
         padding: 40,
         borderRadius: 5,
         border: '1px solid #008000',
@@ -49,6 +56,9 @@ export default attachStyles({
         },
         '&:active': {
             backgroundColor: '#002200'
+        },
+        '& h2': {
+            marginBlock: '10px'
         }
     }
 })(Project)

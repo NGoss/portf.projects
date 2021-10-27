@@ -2,6 +2,7 @@ import React from 'react'
 import attachStyles from 'react-jss'
 import { Classes } from 'jss'
 
+import Nav from './nav';
 import Project, {IAction, IProject} from './project'
 import Expander from './expander'
 
@@ -24,7 +25,14 @@ class App extends React.Component<Props, State> {
         {
           name: "Material-UI eBook Viewer",
           path: "http://viewer.foinse.io",
-          action: IAction.iframe
+          action: IAction.iframe,
+          description: "A material-ui ebook viewer prototype"
+        },
+        {
+          name: "dynamicAPI",
+          path: "",
+          action: IAction.api,
+          description: "A dynamic Java backend for handling CRUD operations on the fly"
         }
       ]
     }
@@ -41,11 +49,18 @@ class App extends React.Component<Props, State> {
 
     return (
       <div className={classes.rootContainer}>
+        <Nav />
         <div className={classes.projectsContainer}>
-          <header className={classes.projectsNav}>
+          <div className={classes.projectsNav}>
             {this.state.projects.map((project :IProject) =>
-              (<Project key={project.name} name={project.name} action={project.action} path={project.path} setExpandedId={this.setExpandedId} />))}
-          </header>
+              (<Project
+                key={project.name}
+                name={project.name}
+                action={project.action}
+                path={project.path}
+                description={project.description}
+                setExpandedId={this.setExpandedId} />))}
+          </div>
           <Expander project={this.state.projects.find((project :IProject) => project.name === this.state.expandedId)} />
         </div>
         <div className={classes.footerContainer}>
@@ -66,10 +81,11 @@ export default attachStyles({
   },
   projectsContainer: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'row',
+    height: '80%'
   },
   projectsNav: {
-    marginBottom: 10,
+    height: '100%'
   },
   footerContainer: {
     bottom: 50,

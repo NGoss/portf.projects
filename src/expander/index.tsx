@@ -31,7 +31,7 @@ class Expander extends React.Component<Props> {
             default: 
                 return (
                     <div className={classes.baseContainer}>
-                        <div>Nothing</div>
+                        <div></div>
                     </div>
                 )
         }
@@ -42,11 +42,11 @@ export default attachStyles({
     baseContainer: {
         display: 'flex',
         width: '100%',
+        margin: '10px',
         borderRadius: 5,
         border: '1px solid #008000',
     },
     frame: {
         width: '100%',
-        height: '75vh'
     }
 })(Expander)
